@@ -6,10 +6,10 @@ import lombok.Data;
 import rm.tech.ecommerce.module.ecommerce.domain.emuns.CustomType;
 
 @Data
-@Entity
+// @Entity
 public class CustomizationTemplate {
     
-    @Id
+    // @Id
     private Long id;
 
     private CustomType customType;
