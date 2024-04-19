@@ -9,15 +9,25 @@ import java.util.UUID;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
+import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
@@ -35,19 +45,42 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     
     @Bean
 	@Order(1)
-	public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-
-		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults());
-		http.exceptionHandling(e -> e
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
-
+		http
+				.authorizeHttpRequests(authorize -> authorize
+						// .requestMatchers("/messages/**")
+						// .access(hasScope("message:read"))
+						.anyRequest().authenticated())
+				.oauth2ResourceServer(oauth2 -> oauth2
+						.jwt(jwt -> jwt
+								.jwtAuthenticationConverter(myConverter())));
 		return http.build();
+	}
+
+	/*
+	 * Configura o serviço authorization server
+	 */
+	@Bean
+	public AuthorizationServerSettings authorizationServerSettings(AuthorizationProperties authorizationProperties) {
+		return AuthorizationServerSettings.builder()
+				.issuer(authorizationProperties.getIssuerUri())
+				.build();
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public JwtDecoder jwtDecoder() {
+		return JwtDecoders.fromIssuerLocation("http://localhost:8080");
 	}
 
 	@Bean
@@ -69,13 +102,10 @@ public class SecurityConfig {
 		return new InMemoryUserDetailsManager(user1);
 	}
 
-    @Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
-
 	@Bean
-	public RegisteredClientRepository registeredClientRepository() {
+	public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+
+		@SuppressWarnings("unused")
 		RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
 				.clientId("client")
 				.clientSecret("secret")
@@ -83,11 +113,24 @@ public class SecurityConfig {
 				.redirectUri("https://oidcdebugger.com/debug")
 				.redirectUri("https://oauthdebugger.com/debug")
 				.redirectUri("https://springone.io/authorized")
-				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_JWT)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.build();
 
-		return new InMemoryRegisteredClientRepository(registeredClient);
+		JdbcRegisteredClientRepository clientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+		return clientRepository;
+	}
+
+	@Bean
+	public OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate,
+			RegisteredClientRepository registeredClientRepository) {
+		return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+	}
+
+	@Bean
+	public OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService(JdbcTemplate jdbcTemplate,
+			RegisteredClientRepository registeredClientRepository) {
+		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
 	}
 
 	@Bean

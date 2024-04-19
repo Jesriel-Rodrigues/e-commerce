@@ -5,14 +5,19 @@ server:
 # Caminho banco de dados
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5430/Ecommerce}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/Ecommerce}
 # Usuario de conexão do banco de dados
     username: postgres
 # Senha de conexão banco de dados
-    password: '123456'
+    password: '@nestec123@'
 # Nome do driver
     driver-class-name: org.postgresql.Driver
-
+  security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:8080
+            jwk-set-uri: http://localhost:8080
 # Configuração para o hibernate gerar atualizações no schema.
   jpa:
     hibernate:
