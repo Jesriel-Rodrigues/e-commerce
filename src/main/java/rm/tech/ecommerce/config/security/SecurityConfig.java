@@ -14,14 +14,17 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
@@ -44,33 +47,25 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import lombok.AllArgsConstructor;
+import rm.tech.ecommerce.properties.EcommerceProp;
+
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig {
+
+	private EcommerceProp ecommerceProp;
     
     @Bean
 	@Order(1)
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		http
-				.authorizeHttpRequests(authorize -> authorize
-						// .requestMatchers("/messages/**")
-						// .access(hasScope("message:read"))
-						.anyRequest().authenticated())
-				.oauth2ResourceServer(oauth2 -> oauth2
-						.jwt(jwt -> jwt
-								.jwtAuthenticationConverter(myConverter())));
+		http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+				.csrf(csrf -> csrf.disable())
+				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();
-	}
-
-	/*
-	 * Configura o serviço authorization server
-	 */
-	@Bean
-	public AuthorizationServerSettings authorizationServerSettings(AuthorizationProperties authorizationProperties) {
-		return AuthorizationServerSettings.builder()
-				.issuer(authorizationProperties.getIssuerUri())
-				.build();
 	}
 
 	@Bean
@@ -78,19 +73,14 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public JwtDecoder jwtDecoder() {
-		return JwtDecoders.fromIssuerLocation("http://localhost:8080");
-	}
+	// @Bean
+	// public JwtEncoder jwtEncoder(){
+	// 	return null;
+	// }
 
 	@Bean
-	@Order(2)
-	public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
-		http
-		.formLogin()
-		.and()
-		.authorizeHttpRequests().anyRequest().authenticated();
-		return http.build();
+	public JwtDecoder jwtDecoder(){
+		return NimbusJwtDecoder.withPublicKey(ecommerceProp.getSecurity().getPublicKey()).build();
 	}
 
 	@Bean
