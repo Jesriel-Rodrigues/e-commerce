@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.AccountRequest;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.LoginRequest;
 import rm.tech.ecommerce.module.account.access.api.dtos.response.AccountCreatedResponse;
+import rm.tech.ecommerce.module.account.access.api.dtos.response.LoginResponse;
 import rm.tech.ecommerce.module.account.access.services.interfaces.IAccountAccessService;
 
 @RestController
@@ -25,8 +26,8 @@ public class AccountAccessController {
     private final IAccountAccessService accountService;
     
     @MutationMapping()
-    @PostMapping("/login")
-    public ResponseEntity<Object> loginAccount( @Argument LoginRequest loginRequest){
+    @PostMapping()
+    public ResponseEntity<LoginResponse> loginAccount( @Argument LoginRequest loginRequest){
 
         return new ResponseEntity<>(accountService.accountLogin(loginRequest), HttpStatus.OK);
     }
