@@ -1,6 +1,9 @@
 package rm.tech.ecommerce.module.account.access.api.controllers;
 
 import org.apache.catalina.connector.Response;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,15 +24,18 @@ public class AccountAccessController {
 
     private final IAccountAccessService accountService;
     
+    @MutationMapping()
     @PostMapping("/login")
-    public ResponseEntity<Object> loginAccount( @RequestBody LoginRequest request){
+    public ResponseEntity<Object> loginAccount( @Argument LoginRequest loginRequest){
 
-        return new ResponseEntity<>(accountService.accountLogin(request), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.accountLogin(loginRequest), HttpStatus.OK);
     }
 
+    // @SchemaMapping()
+    @MutationMapping()
     @PostMapping("/create")
-    public ResponseEntity<AccountCreatedResponse> createAccount(@RequestBody AccountRequest request) {
-        return new ResponseEntity<>(accountService.createAccount(request), HttpStatus.CREATED);
+    public ResponseEntity<AccountCreatedResponse> createAccount(@Argument AccountRequest accountRequest) {
+        return new ResponseEntity<>(accountService.createAccount(accountRequest), HttpStatus.CREATED);
     }
     
 }
