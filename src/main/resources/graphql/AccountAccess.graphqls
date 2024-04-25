@@ -21,9 +21,9 @@ type LoginResponse {
 
 type AccountCreatedResponse {
     id: ID
-    email: String!
-    token: String!
-    expiresIn: Int!
+    email: String
+    token: String
+    expiresIn: Int
 }
 
 type AccountAccessResponse {
@@ -43,5 +43,10 @@ type Query {
 
 type Mutation {
     createAccount(accountRequest: AccountRequest) : AccountCreatedResponse
-    loginAccount(LoginRequest: LoginRequest) : LoginResponse
+    loginAccount(loginRequest: LoginRequest) : LoginResponse
+}
+
+schema {
+    query: Query
+    mutation: Mutation
 }
