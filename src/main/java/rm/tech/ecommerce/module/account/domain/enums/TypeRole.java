@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public enum TypeRole {
     
     DEFAULT(1L),
-    ADMIN_STORE(2L),
+    ADMIN_MARKETPLACE(2L),
     ADMIN_SYSTEM(3L);
 
     private Long size;

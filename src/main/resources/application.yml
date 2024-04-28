@@ -8,11 +8,11 @@ spring:
     graphiql:
       enabled: true
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/Ecommerce}
+    url: ${DB_URL:jdbc:postgresql://localhost:5430/Ecommerce}
 # Usuario de conexão do banco de dados
     username: postgres
 # Senha de conexão banco de dados
-    password: '@nestec123@'
+    password: '123456'
 # Nome do driver
     driver-class-name: org.postgresql.Driver
   security:

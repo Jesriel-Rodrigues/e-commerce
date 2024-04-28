@@ -41,10 +41,8 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
 		http.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/v1/accounts/access/create").permitAll()
 				.requestMatchers(HttpMethod.POST, "/v1/accounts/access/login").permitAll()
-				.requestMatchers("/graphiql/**").permitAll()
 				.requestMatchers("/swagger").permitAll()
 				.requestMatchers("/swagger-ui.html").permitAll()
 				.requestMatchers("/swagger-ui/**").permitAll()
