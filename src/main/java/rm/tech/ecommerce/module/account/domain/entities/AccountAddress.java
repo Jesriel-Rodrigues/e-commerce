@@ -33,6 +33,7 @@ public class AccountAddress extends Address{
     @Column(name = "name_responsible")
     private String nameResponsible;
 
+    @Column(name = "active")
     private Boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
