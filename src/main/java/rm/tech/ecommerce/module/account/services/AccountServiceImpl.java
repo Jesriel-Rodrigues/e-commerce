@@ -4,7 +4,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import rm.tech.ecommerce.exceptions.ResourceBadRequestException;
 import rm.tech.ecommerce.exceptions.ResourceNotFoundException;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.AccountRequest;
 import rm.tech.ecommerce.module.account.access.api.dtos.response.AccountCreatedResponse;
