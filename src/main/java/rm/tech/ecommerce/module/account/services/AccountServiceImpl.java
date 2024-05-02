@@ -21,6 +21,17 @@ public class AccountServiceImpl implements IAccountService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public Optional<Account> findById( Long id){
+        return accountRepository.findById(id);
+    }
+
+    @Override
+    public Account findByIdWithThrow( Long id){
+        return findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada!"));
+    }
+
+    @Override
     public Optional<Account> findByEmail(String email){
         return accountRepository.findByEmail(email);
     }

@@ -1,12 +1,10 @@
 package rm.tech.ecommerce.module.account.domain.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,7 +26,6 @@ public class AccountStoreAddress extends Address{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "account_store_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "storeAddress")
 	private AccountStore store;
 }

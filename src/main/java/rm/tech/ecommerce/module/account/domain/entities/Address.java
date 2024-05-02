@@ -26,5 +26,5 @@ public class Address {
     private String state;
 
     @Column(name = "house_number")
-    private String houseNumber;
+    private Long houseNumber;
 }

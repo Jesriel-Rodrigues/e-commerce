@@ -2,7 +2,6 @@ package rm.tech.ecommerce.module.ecommerce.domain.entities;
 
 import java.util.List;
 
-import graphql.com.google.common.base.Enums;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

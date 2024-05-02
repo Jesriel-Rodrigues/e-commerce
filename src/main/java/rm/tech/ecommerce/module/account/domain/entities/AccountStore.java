@@ -41,10 +41,12 @@ public class AccountStore {
 
     private String cnpj;
 
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "store")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_address_id", referencedColumnName = "id")
     private AccountStoreAddress storeAddress;
 
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "store")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_customize_id", referencedColumnName = "id")
     private AccountStoreCustomize storeCustomize;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
