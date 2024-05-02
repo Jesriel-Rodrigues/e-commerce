@@ -7,7 +7,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.emuns.CustomType;
 
 @Data
 // @Entity
-public class CustomizationTemplate {
+public class ProductCustomizationTemplate {
     
     // @Id
     private Long id;

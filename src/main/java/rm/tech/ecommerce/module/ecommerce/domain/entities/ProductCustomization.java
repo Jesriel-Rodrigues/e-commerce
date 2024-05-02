@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 // @Entity
-public class CustomizationProduct {
+public class ProductCustomization {
 
     // @Id
     private Long id;
