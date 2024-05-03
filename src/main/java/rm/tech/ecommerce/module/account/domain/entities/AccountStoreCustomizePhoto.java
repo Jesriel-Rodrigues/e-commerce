@@ -30,7 +30,7 @@ import rm.tech.ecommerce.module.account.domain.enums.TypePhoto;
 public class AccountStoreCustomizePhoto {
     
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(name = "path")

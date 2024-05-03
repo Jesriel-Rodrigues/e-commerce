@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import rm.tech.ecommerce.module.account.domain.entities.Account;
 
 @Data
 @Builder
@@ -26,7 +25,7 @@ public class StoreResponse {
 
     private StoreCustomizeResponse storeCustomize;
 
-	private Account account;
+	private AccountResponse account;
 
 	private List<StoreCustomizePhotoResponse> photos;
 }

@@ -1,15 +1,21 @@
 package rm.tech.ecommerce.module.account.api.dtos.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record StoreCustomizePost(
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class StoreCustomizePost{
 
-    Long id,
-
-    String urlCustomize,
+    // private Long id;
     
-    String colorPrimary,
-
-    String colorSecundary
-) {
+    private String urlCustomize;
     
+    private String colorPrimary;
+    
+    private String colorSecundary;
 }

@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor 
 @AllArgsConstructor
-public class StoreCustomizeResponse {
+public class AccountResponse {
     
     private Long id;
 
-    private String urlCustomize;
-    
-    private String colorPrimary;
+    private String userName;
 
-    private String colorSecundary;
+    private String email;
 }

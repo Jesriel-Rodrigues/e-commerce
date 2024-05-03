@@ -2,25 +2,31 @@ package rm.tech.ecommerce.module.account.api.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record StoreAddressPost(
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class StoreAddressPost{
 
-    Long id,
+    // private Long id;
 
     @NotBlank
-    String zipCode,
+    private String zipCode;
 
     @NotBlank
-    String street,
+    private String street;
 
     @NotBlank
-    String city,
+    private String city;
 
     @NotBlank
-    String state,
+    private String state;
 
     @NotNull
-    Long houseNumber
-) {
-    
+    private Long houseNumber;
 }

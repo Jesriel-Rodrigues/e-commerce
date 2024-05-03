@@ -4,29 +4,35 @@ package rm.tech.ecommerce.module.account.api.dtos.request;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record StoreByAdminPost(
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class StoreByAdminPost{
 
-    Long id,
+    // private Long id;
 
     @NotBlank
-    String name,
+    private String name;
 
     @NotBlank
-    String email,
+    private String email;
 
-    String cnpj,
+    private String cnpj;
 
     @Valid
     @NotNull
-    StoreAddressPost storeAddress,
+    private StoreAddressPost storeAddress;
 
     @Valid
     @NotNull
-    StoreCustomizePost storeCustomize,
+    private StoreCustomizePost storeCustomize;
 
     @NotNull
-    Long accountId
-) {
-    
+    private Long accountId;
 }

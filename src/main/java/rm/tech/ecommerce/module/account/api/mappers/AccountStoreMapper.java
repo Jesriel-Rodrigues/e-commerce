@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import rm.tech.ecommerce.module.account.api.dtos.request.StoreByAdminPost;
+import rm.tech.ecommerce.module.account.api.dtos.response.StoreResponse;
 import rm.tech.ecommerce.module.account.domain.entities.AccountStore;
 
 @Component
@@ -15,5 +16,9 @@ public class AccountStoreMapper {
 
     public AccountStore convertRequestInEntity( StoreByAdminPost storePost){
         return modelMapper.map(storePost, AccountStore.class);
+    }
+
+    public StoreResponse convertEntityInResponse( AccountStore store){
+        return modelMapper.map(store, StoreResponse.class);
     }
 }
