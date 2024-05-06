@@ -1,15 +1,17 @@
 package rm.tech.ecommerce.config.security;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,7 +21,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -36,6 +38,10 @@ import rm.tech.ecommerce.properties.EcommerceProp;
 public class SecurityConfig {
 
 	private EcommerceProp ecommerceProp;
+
+	private UserDetailsService userDetailsService;
+
+	private SecurityFilter securityFilter;
     
     @Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,6 +59,7 @@ public class SecurityConfig {
 				.requestMatchers("/v2/api-docs/**").permitAll()
 				.requestMatchers("/v3/api-docs/**").permitAll()
 				.anyRequest().authenticated())
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.csrf(csrf -> csrf.disable())
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -79,5 +86,8 @@ public class SecurityConfig {
 		return NimbusJwtDecoder.withPublicKey(ecommerceProp.getSecurity().getPublicKey()).build();
 	}
 
-	
+	@Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
 }

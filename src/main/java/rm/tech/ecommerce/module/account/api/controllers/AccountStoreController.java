@@ -25,7 +25,7 @@ public class AccountStoreController {
 
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN_SYSTEM')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN_STOREA')")
     public ResponseEntity<StoreResponse> createStoreByAdmin(@Valid @RequestBody StoreByAdminPost request) {
         return new ResponseEntity<>(storeService.createStoreByAdmin(request), HttpStatus.CREATED);
     }
