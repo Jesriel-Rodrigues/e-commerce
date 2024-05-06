@@ -15,4 +15,8 @@ public enum TypeRole {
 
     private Long size;
     private String description;
+
+    public String getName(){
+        return this.name();
+    }
 }

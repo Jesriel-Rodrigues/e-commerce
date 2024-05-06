@@ -69,9 +69,8 @@ public class SecurityConfig {
 		JWK jwk = new RSAKey.Builder(ecommerceProp.getSecurity().getPublicKey())
 		.privateKey(ecommerceProp.getSecurity().getPrivateKey())
 		.build();
-
+		
 		var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-
 		return new NimbusJwtEncoder(jwks);
 	}
 

@@ -50,6 +50,7 @@ public class RolesAndAdminConfig implements CommandLineRunner{
                     user.setUserName("admin");
                     user.setPassword(passwordEncoder.encode("123"));
                     user.setRoles(Set.of(roleAdmin));
+                    user.setId(null);
                     accountRepository.save(user);
                 }
         );

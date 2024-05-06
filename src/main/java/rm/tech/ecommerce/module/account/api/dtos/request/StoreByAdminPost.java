@@ -15,12 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StoreByAdminPost{
 
-    // private Long id;
-
-    @NotBlank
+    @NotBlank(message = "Atributo [NAME] não pode ser vazio")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Atributo [EMAIL] não pode ser vazio")
     private String email;
 
     private String cnpj;
@@ -33,6 +31,6 @@ public class StoreByAdminPost{
     @NotNull
     private StoreCustomizePost storeCustomize;
 
-    @NotNull
+    @NotNull(message = "Atributo [ACCOUNTID] não pode ser vazio")
     private Long accountId;
 }

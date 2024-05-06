@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StoreCustomizePost{
-
-    // private Long id;
     
     private String urlCustomize;
     

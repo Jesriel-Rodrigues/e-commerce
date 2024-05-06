@@ -13,20 +13,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StoreAddressPost{
 
-    // private Long id;
-
-    @NotBlank
+    @NotBlank(message = "Atributo [zipCode] não pode ser vazio")
     private String zipCode;
 
-    @NotBlank
+    @NotBlank(message = "Atributo [street] não pode ser vazio")
     private String street;
 
-    @NotBlank
+    @NotBlank(message = "Atributo [city] não pode ser vazio")
     private String city;
 
-    @NotBlank
+    @NotBlank(message = "Atributo [state] não pode ser vazio")
     private String state;
 
-    @NotNull
+    @NotNull(message = "Atributo [houseNumber] não pode ser vazio")
     private Long houseNumber;
 }
