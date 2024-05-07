@@ -8,10 +8,14 @@ import rm.tech.ecommerce.exceptions.ResourceNotFoundException;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.AccountRequest;
 import rm.tech.ecommerce.module.account.access.api.dtos.response.AccountCreatedResponse;
 import rm.tech.ecommerce.module.account.domain.entities.Account;
+import rm.tech.ecommerce.module.account.domain.entities.AccountRole;
+import rm.tech.ecommerce.module.account.domain.enums.TypeRole;
 import rm.tech.ecommerce.module.account.domain.repositories.AccountRepository;
+import rm.tech.ecommerce.module.account.services.interfaces.IAccountRoleService;
 import rm.tech.ecommerce.module.account.services.interfaces.IAccountService;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +23,7 @@ public class AccountServiceImpl implements IAccountService{
     
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IAccountRoleService roleService;
 
     @Override
     public Optional<Account> findById( Long id){
@@ -51,9 +56,13 @@ public class AccountServiceImpl implements IAccountService{
 
     @Override
     public AccountCreatedResponse create(AccountRequest request) {
+
+        AccountRole role = roleService.findByTypeRoleWithThrow(TypeRole.DEFAULT);
         
         Account account = Account.builder()
             .email(request.email())
+            .userName(request.userName())
+            .roles(Set.of(role))
             .password(passwordEncoder.encode(request.password()))
         .build();
 

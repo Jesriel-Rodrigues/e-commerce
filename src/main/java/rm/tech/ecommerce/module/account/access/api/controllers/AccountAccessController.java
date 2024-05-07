@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.AccountRequest;
 import rm.tech.ecommerce.module.account.access.api.dtos.request.LoginRequest;
@@ -22,12 +23,12 @@ public class AccountAccessController {
     private final IAccountAccessService accountService;
     
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginAccount( @RequestBody LoginRequest loginRequest){
+    public ResponseEntity<LoginResponse> loginAccount(@Valid @RequestBody LoginRequest loginRequest){
         return new ResponseEntity<>(accountService.accountLogin(loginRequest), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AccountCreatedResponse> createAccount(@RequestBody AccountRequest accountRequest) {
+    public ResponseEntity<AccountCreatedResponse> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
         return new ResponseEntity<>(accountService.createAccount(accountRequest), HttpStatus.CREATED);
     }
 }
