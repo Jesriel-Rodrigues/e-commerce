@@ -38,9 +38,7 @@ import rm.tech.ecommerce.properties.EcommerceProp;
 public class SecurityConfig {
 
 	private EcommerceProp ecommerceProp;
-
 	private UserDetailsService userDetailsService;
-
 	private SecurityFilter securityFilter;
     
     @Bean

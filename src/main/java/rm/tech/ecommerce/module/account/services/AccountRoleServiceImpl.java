@@ -1,13 +1,9 @@
 package rm.tech.ecommerce.module.account.services;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -53,7 +49,7 @@ public class AccountRoleServiceImpl implements IAccountRoleService {
 
 
     @Override
-    public List<Map<String, String>> claimRolesAuthorityByAccount(Account account){
+    public String claimRolesAuthorityByAccount(Account account){
         
         Long maxRoleNumberAccount = getMaxRoleSize(account); 
 
@@ -68,15 +64,7 @@ public class AccountRoleServiceImpl implements IAccountRoleService {
 
         // Criar a string com as roles filtradas
         return  rolesAuthorized.stream()
-            .map(role -> extracted(role))
-            // .collect(Collectors.joining(" "));        
-            .collect(Collectors.toList());        
-    }
-
-    private Map<String, String> extracted(String role) {
-        Map<String, String> roleMap = new HashMap<>();
-        roleMap.put("scope", role);
-        return roleMap;
+            .collect(Collectors.joining(" "));        
     }
 
     public Long getMaxRoleSize(Account account){

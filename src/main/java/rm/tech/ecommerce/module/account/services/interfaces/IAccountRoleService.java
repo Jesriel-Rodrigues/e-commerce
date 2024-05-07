@@ -1,9 +1,6 @@
 package rm.tech.ecommerce.module.account.services.interfaces;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import rm.tech.ecommerce.module.account.domain.entities.Account;
 import rm.tech.ecommerce.module.account.domain.entities.AccountRole;
@@ -17,5 +14,5 @@ public interface IAccountRoleService {
 
     void addRoleInAccount(Account account, TypeRole typeRole);
 
-    List<Map<String, String>> claimRolesAuthorityByAccount(Account account);
+    String claimRolesAuthorityByAccount(Account account);
 }

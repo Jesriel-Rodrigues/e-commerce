@@ -1,6 +1,5 @@
 package rm.tech.ecommerce.module.account.access.services;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -20,10 +19,6 @@ import rm.tech.ecommerce.module.account.services.interfaces.IAccountService;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -33,12 +28,10 @@ public class AccountAccessServiceImpl implements IAccountAccessService{
     private final IAccountService accountService;
     private final JwtEncoder encoder;
     private final IAccountRoleService roleService;
-    private final UserDetailsServiceImpl uServiceImpl;
 
     @Override
     public LoginResponse accountLogin(LoginRequest request){
 
-        UserDetails userDetails = uServiceImpl.loadUserByUsername(request.email());
         Account account = accountService.findByEmailWithThrow(request.email());
 
         if (!isLoginCorrect(request.password(), account.getPassword())) {
@@ -48,24 +41,16 @@ public class AccountAccessServiceImpl implements IAccountAccessService{
         Instant now = Instant.now();
         Long expiresIn = 5L;
 
-        List<Map<String, String>> rolesClaims = roleService.claimRolesAuthorityByAccount(account);
+        String rolesClaims = roleService.claimRolesAuthorityByAccount(account);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("rm-tech-ecommerce")
                 .issuedAt(now)
                 .subject(account.getEmail())
                 .expiresAt(now.plus(expiresIn, ChronoUnit.DAYS))
-                .claim("scope", "DEFAULT ADMIN_STORE ADMIN_SYSTEM")
-                .build();
+                .claim("scope", rolesClaims)
+            .build();
                 
-        // Iterar sobre a lista de reivindicações de autoridade e adicioná-las ao builder
-        // for (Map<String, String> roleClaim : rolesClaims) {
-        //     for (Map.Entry<String, String> entry : roleClaim.entrySet()) {
-        //         builder.claim(entry.getKey(), entry.getValue());
-        //     }
-        // }
-
-        // JwtClaimsSet claims = builder.build();    
         String tokenJwt = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
         return new LoginResponse(tokenJwt, expiresIn);
     }
