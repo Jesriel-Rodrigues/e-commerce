@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import rm.tech.ecommerce.module.ecommerce.domain.entities.Product;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.product.Product;
 
 
 @RestController
