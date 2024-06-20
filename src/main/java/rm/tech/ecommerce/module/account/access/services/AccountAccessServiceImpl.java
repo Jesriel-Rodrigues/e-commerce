@@ -14,11 +14,11 @@ import rm.tech.ecommerce.module.account.access.api.dtos.response.AccountCreatedR
 import rm.tech.ecommerce.module.account.access.api.dtos.response.LoginResponse;
 import rm.tech.ecommerce.module.account.access.services.interfaces.IAccountAccessService;
 import rm.tech.ecommerce.module.account.domain.entities.Account;
+import rm.tech.ecommerce.module.account.services.interfaces.IAccountRoleService;
 import rm.tech.ecommerce.module.account.services.interfaces.IAccountService;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +27,7 @@ public class AccountAccessServiceImpl implements IAccountAccessService{
     private final PasswordEncoder passwordEncoder;
     private final IAccountService accountService;
     private final JwtEncoder encoder;
+    private final IAccountRoleService roleService;
 
     @Override
     public LoginResponse accountLogin(LoginRequest request){
@@ -40,13 +41,16 @@ public class AccountAccessServiceImpl implements IAccountAccessService{
         Instant now = Instant.now();
         Long expiresIn = 5L;
 
+        String rolesClaims = roleService.claimRolesAuthorityByAccount(account);
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
-            .issuer("rm-tech-ecommerce")
-            .issuedAt(now)
-            .subject(account.getEmail())
-            .expiresAt(now.plus(expiresIn, ChronoUnit.DAYS))
-        .build();
-        
+                .issuer("rm-tech-ecommerce")
+                .issuedAt(now)
+                .subject(account.getEmail())
+                .expiresAt(now.plus(expiresIn, ChronoUnit.DAYS))
+                .claim("scope", rolesClaims)
+            .build();
+                
         String tokenJwt = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
         return new LoginResponse(tokenJwt, expiresIn);
     }

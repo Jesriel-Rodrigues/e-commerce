@@ -7,6 +7,10 @@ import rm.tech.ecommerce.module.account.access.api.dtos.response.AccountCreatedR
 import rm.tech.ecommerce.module.account.domain.entities.Account;
 
 public interface IAccountService {
+
+    Optional<Account> findById( Long id);
+
+    Account findByIdWithThrow( Long id);
     
     Optional<Account> findByEmail(String email);
 
