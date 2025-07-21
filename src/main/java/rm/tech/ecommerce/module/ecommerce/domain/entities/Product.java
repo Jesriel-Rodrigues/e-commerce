@@ -1,7 +1,6 @@
 package rm.tech.ecommerce.module.ecommerce.domain.entities;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +33,7 @@ public class Product {
     
     private BigDecimal preco;
     
-    private List<ProductCustomization> customizations;
+    // private List<ProductCustomization> customizations;
 
-    private List<ProductPhotos> photos;
+    // private List<ProductPhotos> photos;
 }

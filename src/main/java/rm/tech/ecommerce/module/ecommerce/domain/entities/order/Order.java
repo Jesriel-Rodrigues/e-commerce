@@ -1,7 +1,5 @@
 package rm.tech.ecommerce.module.ecommerce.domain.entities.order;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,5 +18,5 @@ public class Order {
 
     
 
-    private List<OrderProducts> orderProducts;
+    // private List<OrderProducts> orderProducts;
 }
