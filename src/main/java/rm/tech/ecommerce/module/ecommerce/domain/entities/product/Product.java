@@ -2,14 +2,9 @@ package rm.tech.ecommerce.module.ecommerce.domain.entities.product;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.structure.Structure;
 
 @Data
 @Entity
@@ -29,4 +24,8 @@ public class Product {
 
     @OneToMany(mappedBy="product", fetch=FetchType.EAGER)
     private List<ProductPhoto> productPhotos;
+
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="structure_id", referencedColumnName="id")
+    private Structure structure;
 }

@@ -26,8 +26,7 @@ public class ProductPhoto {
 
     private String url;
 
-    @Column(name = "size")
-	private Long size;
+	private Long sequence;
 
     @ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.REFRESH)
     @JoinColumn(name="product_id", referencedColumnName="id")
