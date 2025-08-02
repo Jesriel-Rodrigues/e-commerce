@@ -3,12 +3,14 @@ package rm.tech.ecommerce.module.ecommerce.domain.entities.product;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.structure.Structure;
 
 @Data
 @Entity
 @Table(name = "rm_product")
+@AllArgsConstructor
 public class Product {
 
     @Id

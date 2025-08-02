@@ -13,4 +13,8 @@ public class StructureColor {
     private Long id;
 
     private String name;
+
+    @ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.REFRESH)
+    @JoinColumn(name="structure_id", referencedColumnName="id")
+    private Structure structure;
 }

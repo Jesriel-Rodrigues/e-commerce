@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.ecommerce.services;
+package rm.tech.ecommerce.module.ecommerce.services.product;
 
 import org.springframework.stereotype.Service;
 
