@@ -25,12 +25,13 @@ public class ProductServiceImpl implements IProductService{
 
         Structure structure = structureService.getById(request.getStructureId());
 
-        Product product = new Product(null,
+        Product product = new Product(
                 request.getName(),
                 request.getDescription(),
                 null,
                 null,
                 structure);
-        return null;
+
+        return productRepository.save(product);
     }
 }
