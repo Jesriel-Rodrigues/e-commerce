@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.CustomizationFields;
 
 
 @Data
@@ -31,5 +32,5 @@ public class SelectItems {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="customization_product_id", referencedColumnName="id")
-    private ProductCustomizationFields customizationProduct;
+    private CustomizationFields customizationProduct;
 }

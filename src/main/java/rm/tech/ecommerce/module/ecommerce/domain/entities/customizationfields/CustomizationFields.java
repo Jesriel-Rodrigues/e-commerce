@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.ecommerce.domain.entities.product;
+package rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,13 +16,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.product.Product;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.product.SelectItems;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.enums.CustomizationFieldsStatus;
 import rm.tech.ecommerce.module.ecommerce.domain.enums.CustomType;
 
 @Data
 @Entity
 @Table(name = "rm_product_customization_fields")
-public class ProductCustomizationFields {
+@AllArgsConstructor
+public class CustomizationFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +43,9 @@ public class ProductCustomizationFields {
     private boolean notNull;
 
     private Long sequence;
+
+    @Enumerated(EnumType.STRING)
+    private CustomizationFieldsStatus status;
 
     @OneToMany(mappedBy="customizationProduct", fetch=FetchType.EAGER)
     private List<SelectItems> items;

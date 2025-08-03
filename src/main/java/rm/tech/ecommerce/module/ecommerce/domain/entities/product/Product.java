@@ -4,11 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import rm.tech.ecommerce.module.commom.AuditCommom;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.CustomizationFields;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.structure.Structure;
 
 @Data
@@ -22,7 +21,7 @@ public class Product extends AuditCommom {
     private String description;
 
     @OneToMany(mappedBy="product", fetch=FetchType.EAGER)
-    private List<ProductCustomizationFields> customizations;
+    private List<CustomizationFields> customizations;
 
     @OneToMany(mappedBy="product", fetch=FetchType.EAGER)
     private List<ProductPhoto> productPhotos;
@@ -32,7 +31,7 @@ public class Product extends AuditCommom {
     private Structure structure;
 
 
-    public Product(String name, String description, List<ProductCustomizationFields> customizations, List<ProductPhoto> productPhotos, Structure structure) {
+    public Product(String name, String description, List<CustomizationFields> customizations, List<ProductPhoto> productPhotos, Structure structure) {
         super(null, null, null ,null, null);
         this.name = name;
         this.description = description;
@@ -41,7 +40,7 @@ public class Product extends AuditCommom {
         this.structure = structure;
     }
 
-    public Product(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, String description, List<ProductCustomizationFields> customizations, List<ProductPhoto> productPhotos, Structure structure) {
+    public Product(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, String description, List<CustomizationFields> customizations, List<ProductPhoto> productPhotos, Structure structure) {
         super(id, createdDate, createdBy, modifiedDate, modifiedBy);
         this.name = name;
         this.description = description;
