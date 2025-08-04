@@ -14,7 +14,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.enums.CustomType;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductCustomizationFieldsRequest {
+public class CustomizationFieldsRequest {
     
 
     private Long id;
