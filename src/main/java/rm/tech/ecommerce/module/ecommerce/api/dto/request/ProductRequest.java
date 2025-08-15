@@ -20,9 +20,9 @@ public class ProductRequest {
 
     private String description;
 
-    private List<CustomizationFieldsRequest> customizations;
+    private List<Long> customizations;
 
     private Long structureId;
 
-    private List<ProductPhotoRequest> photos;
+    private List<String> photos;
 }

@@ -22,8 +22,6 @@ public class ProductPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     private String url;
 
 	private Long sequence;
@@ -31,4 +29,11 @@ public class ProductPhoto {
     @ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.REFRESH)
     @JoinColumn(name="product_id", referencedColumnName="id")
     private Product product;
+
+    public ProductPhoto(Long id, String url, Long sequence, Product product) {
+        this.id = id;
+        this.url = url;
+        this.sequence = sequence;
+        this.product = product;
+    }
 }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import rm.tech.ecommerce.module.commom.AuditCommom;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.enums.SelectItemStatus;
 
@@ -12,6 +13,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.en
 @Data
 @Entity
 @Table(name="rm_select_items")
+@NoArgsConstructor
 public class SelectItem extends AuditCommom {
 
     private String name;
@@ -25,9 +27,9 @@ public class SelectItem extends AuditCommom {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="customization_product_id", referencedColumnName="id")
-    private CustomizationFields customizationProduct;
+    private CustomizationField customizationProduct;
 
-    public SelectItem(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, String description, SelectItemStatus status, BigDecimal value, CustomizationFields customizationProduct) {
+    public SelectItem(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, String description, SelectItemStatus status, BigDecimal value, CustomizationField customizationProduct) {
         super(id, createdDate, createdBy, modifiedDate, modifiedBy);
         this.name = name;
         this.description = description;
@@ -36,7 +38,7 @@ public class SelectItem extends AuditCommom {
         this.customizationProduct = customizationProduct;
     }
 
-    public SelectItem(String name, String description, SelectItemStatus status, BigDecimal value, CustomizationFields customizationProduct) {
+    public SelectItem(String name, String description, SelectItemStatus status, BigDecimal value, CustomizationField customizationProduct) {
         this.name = name;
         this.description = description;
         this.status = status;

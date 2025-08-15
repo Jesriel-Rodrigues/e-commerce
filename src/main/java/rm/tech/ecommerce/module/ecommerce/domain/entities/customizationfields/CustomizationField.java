@@ -25,7 +25,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.enums.CustomType;
 @Entity
 @Table(name = "rm_customization_fields")
 @NoArgsConstructor
-public class CustomizationFields extends AuditCommom {
+public class CustomizationField extends AuditCommom {
 
     private String name;
 
@@ -45,12 +45,8 @@ public class CustomizationFields extends AuditCommom {
     private List<SelectItem> items;
 
     private BigDecimal value;
-    
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.REFRESH)
-    @JoinColumn(name="product_id", referencedColumnName="id")
-    private Product product;
 
-    public CustomizationFields(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, CustomType customType, boolean notNull, Long sequence, CustomizationFieldsStatus status, List<SelectItem> items, BigDecimal value, Product product) {
+    public CustomizationField(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, CustomType customType, boolean notNull, Long sequence, CustomizationFieldsStatus status, List<SelectItem> items, BigDecimal value) {
         super(id, createdDate, createdBy, modifiedDate, modifiedBy);
         this.name = name;
         this.customType = customType;
@@ -59,10 +55,9 @@ public class CustomizationFields extends AuditCommom {
         this.status = status;
         this.items = items;
         this.value = value;
-        this.product = product;
     }
 
-    public CustomizationFields(String name, CustomType customType, boolean notNull, Long sequence, CustomizationFieldsStatus status, List<SelectItem> items, BigDecimal value, Product product) {
+    public CustomizationField(String name, CustomType customType, boolean notNull, Long sequence, CustomizationFieldsStatus status, List<SelectItem> items, BigDecimal value) {
         this.name = name;
         this.customType = customType;
         this.notNull = notNull;
@@ -70,6 +65,5 @@ public class CustomizationFields extends AuditCommom {
         this.status = status;
         this.items = items;
         this.value = value;
-        this.product = product;
     }
 }
