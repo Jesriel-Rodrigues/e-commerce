@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "rm_structure")
-public class Structure  extends AuditCommom {
+public class Structure extends AuditCommom {
 
     private String name;
 
