@@ -36,14 +36,12 @@ public class RolesAndAdminConfig implements CommandLineRunner{
         generateTypeRoles();
 
         Optional<AccountRole> roleAdminOpt = accountRoleRepository.findByTypeRole(TypeRole.ADMIN_SYSTEM);
-        AccountRole roleAdmin = roleAdminOpt.isPresent() ? roleAdminOpt.get() : null;
+        AccountRole roleAdmin = roleAdminOpt.orElse(null);
 
         Optional<Account> userAdmin = accountRepository.findByEmail("admin@email.com");
 
         userAdmin.ifPresentOrElse(
-                user -> {
-                    System.out.println("admin ja existe");
-                },
+                user -> System.out.println("admin ja existe"),
                 () -> {
                     var user = new Account();
                     user.setEmail("admin@email.com");
@@ -62,7 +60,7 @@ public class RolesAndAdminConfig implements CommandLineRunner{
             
             Optional<AccountRole> role = accountRoleRepository.findByTypeRole(roleValue);
 
-            if (!role.isPresent()) {
+            if (role.isEmpty()) {
                 
                 AccountRole newRole = AccountRole.builder()
                     .typeRole(roleValue)
