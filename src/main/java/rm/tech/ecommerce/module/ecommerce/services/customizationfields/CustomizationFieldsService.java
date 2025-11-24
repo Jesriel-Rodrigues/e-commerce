@@ -3,8 +3,8 @@ package rm.tech.ecommerce.module.ecommerce.services.customizationfields;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import rm.tech.ecommerce.exceptions.ResourceNotFoundException;
-import rm.tech.ecommerce.module.ecommerce.api.dto.request.CustomizationFieldsRequest;
-import rm.tech.ecommerce.module.ecommerce.api.dto.request.SelectItemsRequest;
+import rm.tech.ecommerce.module.ecommerce.api.customization.dto.request.CustomizationFieldRequest;
+import rm.tech.ecommerce.module.ecommerce.api.customization.dto.request.SelectItemRequest;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.CustomizationField;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.SelectItem;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.customizationfields.enums.CustomizationFieldsStatus;
@@ -36,7 +36,7 @@ public class CustomizationFieldsService implements ICustomizationFieldsService {
     }
 
     @Override
-    public CustomizationField create(CustomizationFieldsRequest request){
+    public CustomizationField create(CustomizationFieldRequest request){
 
         CustomizationField customizationField = new CustomizationField(
                 request.getName(),
@@ -50,7 +50,7 @@ public class CustomizationFieldsService implements ICustomizationFieldsService {
         return customizationFieldRepository.save(customizationField);
     }
 
-    public List<SelectItem> buildItems(List<SelectItemsRequest> items){
+    public List<SelectItem> buildItems(List<SelectItemRequest> items){
 
         return items.stream()
                 .map(item -> new SelectItem(

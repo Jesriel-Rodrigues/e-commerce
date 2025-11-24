@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.ecommerce.api.dto.request;
+package rm.tech.ecommerce.module.ecommerce.api.product.dto.request;
 
 import java.util.List;
 

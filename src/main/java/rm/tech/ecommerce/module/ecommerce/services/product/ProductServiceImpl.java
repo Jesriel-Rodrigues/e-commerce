@@ -3,7 +3,7 @@ package rm.tech.ecommerce.module.ecommerce.services.product;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import rm.tech.ecommerce.module.ecommerce.api.dto.request.ProductRequest;
+import rm.tech.ecommerce.module.ecommerce.api.product.dto.request.ProductRequest;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.Product;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.ProductGroupCustomization;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.ProductPhoto;

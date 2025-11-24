@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.ecommerce.api.dto.request;
+package rm.tech.ecommerce.module.ecommerce.api.customization.dto.request;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,7 +14,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.enums.CustomType;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomizationFieldsRequest {
+public class CustomizationFieldRequest {
     
 
     private Long id;
@@ -27,7 +27,7 @@ public class CustomizationFieldsRequest {
 
     private Long sequence;
 
-    private List<SelectItemsRequest> items;
+    private List<SelectItemRequest> items;
 
     private BigDecimal value;
     
