@@ -14,7 +14,11 @@ public class StructureType implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="structure_size_id", referencedColumnName="id")
     private StructureSize structureSize;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="structure_translation_id", referencedColumnName="id")
     private StructureTranslation structureTranslation;
 }

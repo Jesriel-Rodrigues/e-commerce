@@ -1,6 +1,6 @@
 package rm.tech.ecommerce.module.ecommerce.services.structure.interfaces;
 
-import rm.tech.ecommerce.module.ecommerce.api.product.dto.request.SctructureRequest;
+import rm.tech.ecommerce.module.ecommerce.api.structure.dto.request.SctructureRequest;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.structure.Structure;
 
 import java.util.Optional;

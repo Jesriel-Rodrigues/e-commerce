@@ -16,6 +16,8 @@ public class StructureColor implements Serializable {
 
     private String name;
 
+    private String color;
+
     @ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.REFRESH)
     @JoinColumn(name="structure_id", referencedColumnName="id")
     private Structure structure;

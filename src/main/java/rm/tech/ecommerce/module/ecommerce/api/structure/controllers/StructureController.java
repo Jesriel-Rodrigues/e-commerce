@@ -1,11 +1,11 @@
-package rm.tech.ecommerce.module.ecommerce.api.product.controllers;
+package rm.tech.ecommerce.module.ecommerce.api.structure.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rm.tech.ecommerce.module.ecommerce.api.product.dto.request.SctructureRequest;
+import rm.tech.ecommerce.module.ecommerce.api.structure.dto.request.SctructureRequest;
 import rm.tech.ecommerce.module.ecommerce.services.structure.interfaces.IStructureService;
 
 @RestController
