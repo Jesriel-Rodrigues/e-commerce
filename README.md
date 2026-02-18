@@ -1,6 +1,6 @@
 # e-commerce
 E-commerce para venda de produtos acompanhamento de vendas
 
-excalidraw https://excalidraw.com/#json=FXVu8YaxtTlpRL9rQiN7B,GSMKo9g2pPowA9T5QR5ARg
+excalidraw https://excalidraw.com/#json=qZjQv8lsy-PjTEsO1y35R,PjwiGMMBi3p9jjj8cYtArw
 
-![img.png](img.png)
+![img_1.png](img_1.png)
