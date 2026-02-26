@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import rm.tech.ecommerce.module.account.api.dtos.request.StoreByAdminPost;
 import rm.tech.ecommerce.module.account.api.dtos.response.StoreResponse;
-import rm.tech.ecommerce.module.account.domain.entities.AccountStore;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.StoreAccount;
 
 public interface IAccountStoreService {
 
-    AccountStore findByIdWithThrow(Long id);
+    StoreAccount findByIdWithThrow(Long id);
 
-    Optional<AccountStore> findById(Long id);
+    Optional<StoreAccount> findById(Long id);
 
     Object findStoreResponseById(Long id);
 

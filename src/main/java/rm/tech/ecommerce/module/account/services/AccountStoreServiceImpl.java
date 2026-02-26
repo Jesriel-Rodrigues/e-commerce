@@ -10,7 +10,7 @@ import rm.tech.ecommerce.module.account.api.dtos.request.StoreByAdminPost;
 import rm.tech.ecommerce.module.account.api.dtos.response.StoreResponse;
 import rm.tech.ecommerce.module.account.api.mappers.AccountStoreMapper;
 import rm.tech.ecommerce.module.account.domain.entities.Account;
-import rm.tech.ecommerce.module.account.domain.entities.AccountStore;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.StoreAccount;
 import rm.tech.ecommerce.module.account.domain.enums.TypeRole;
 import rm.tech.ecommerce.module.account.domain.repositories.AccountStoreRepository;
 import rm.tech.ecommerce.module.account.services.interfaces.IAccountRoleService;
@@ -30,13 +30,13 @@ public class AccountStoreServiceImpl implements IAccountStoreService {
 
 
     @Override
-    public AccountStore findByIdWithThrow( Long id){
+    public StoreAccount findByIdWithThrow(Long id){
         return findById(id)
             .orElseThrow(() -> new ResourceBadRequestException("Loja não encontrada"));
     }
 
     @Override
-    public Optional<AccountStore> findById( Long id){
+    public Optional<StoreAccount> findById(Long id){
         return storeRepository.findById(id);
     }
 
@@ -50,7 +50,7 @@ public class AccountStoreServiceImpl implements IAccountStoreService {
 
         Account account =  accountService.findByIdWithThrow(request.getAccountId());
         
-        AccountStore store = storeMapper.convertRequestInEntity(request);
+        StoreAccount store = storeMapper.convertRequestInEntity(request);
 
         addIdsAccountInStore(store, account);
 
@@ -62,7 +62,7 @@ public class AccountStoreServiceImpl implements IAccountStoreService {
         return storeMapper.convertEntityInResponse(store);
     }
 
-    private void addIdsAccountInStore(AccountStore store, Account account){
+    private void addIdsAccountInStore(StoreAccount store, Account account){
 
         if (account.getStore() != null) {
             store.setId(account.getStore().getId());

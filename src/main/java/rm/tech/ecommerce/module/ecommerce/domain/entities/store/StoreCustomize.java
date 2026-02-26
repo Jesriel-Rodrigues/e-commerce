@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.account.domain.entities;
+package rm.tech.ecommerce.module.ecommerce.domain.entities.store;
 
 
 import jakarta.persistence.Column;
@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "rm_account_store_customize")
-public class AccountStoreCustomize {
+@Table(name = "rm_store_customize")
+public class StoreCustomize {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,5 +36,5 @@ public class AccountStoreCustomize {
     private String colorSecundary;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "storeCustomize")
-	private AccountStore store;
+	private Store store;
 }

@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.StoreAccount;
 
 @Data
 @Entity
@@ -40,9 +41,6 @@ public class Account {
 
     @Column(name = "password")
     private String password;
-
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "account")
-    private AccountStore store;
 
     @ManyToMany
     @JoinTable(

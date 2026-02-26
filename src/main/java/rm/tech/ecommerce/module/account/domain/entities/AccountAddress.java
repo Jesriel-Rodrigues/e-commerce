@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import rm.tech.ecommerce.module.commom.Address;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "rm_account_address")
-public class AccountAddress extends Address{
+public class AccountAddress extends Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

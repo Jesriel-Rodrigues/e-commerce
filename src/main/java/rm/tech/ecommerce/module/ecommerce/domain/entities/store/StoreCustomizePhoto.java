@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.account.domain.entities;
+package rm.tech.ecommerce.module.ecommerce.domain.entities.store;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -26,8 +26,8 @@ import rm.tech.ecommerce.module.account.domain.enums.TypePhoto;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "rm_account_store_customize_photo")
-public class AccountStoreCustomizePhoto {
+@Table(name = "rm_store_customize_photo")
+public class StoreCustomizePhoto {
     
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +46,5 @@ public class AccountStoreCustomizePhoto {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "account_id", referencedColumnName = "id")
 	@JsonIgnoreProperties("photos")
-	private AccountStore store;
+	private StoreAccount store;
 }

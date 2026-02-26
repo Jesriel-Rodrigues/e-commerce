@@ -1,4 +1,4 @@
-package rm.tech.ecommerce.module.account.domain.entities;
+package rm.tech.ecommerce.module.commom;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
