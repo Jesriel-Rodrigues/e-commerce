@@ -1,13 +1,11 @@
 package rm.tech.ecommerce.module.ecommerce.domain.entities.product;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import rm.tech.ecommerce.module.commom.AuditCommom;
-import rm.tech.ecommerce.module.ecommerce.domain.entities.structure.Structure;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.Store;
 
 @Data
 @Entity
@@ -19,32 +17,26 @@ public class Product extends AuditCommom {
 
     private String description;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "model_id", referencedColumnName = "id")
+    private Model model;
+
     @OneToMany(mappedBy="product", fetch=FetchType.LAZY)
-    private List<ProductGroupCustomization> groupCustomizationFields;
+    private List<ProductSku> productSkus;
 
     @OneToMany(mappedBy="product", fetch=FetchType.LAZY)
     private List<ProductPhoto> productPhotos;
 
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="structure_id", referencedColumnName="id")
-    private Structure structure;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
 
 
-    public Product(String name, String description, List<ProductGroupCustomization> groupCustomizationFields, List<ProductPhoto> productPhotos, Structure structure) {
-        super(null, null, null ,null, null);
+    public Product(AuditCommom audit, String name, String description, List<ProductSku> productSkus, List<ProductPhoto> productPhotos) {
+        super(audit.getId(), audit.getCreatedDate(), audit.getCreatedBy(), audit.getModifiedDate(), audit.getModifiedBy());
         this.name = name;
         this.description = description;
-        this.groupCustomizationFields = groupCustomizationFields;
+        this.productSkus = productSkus;
         this.productPhotos = productPhotos;
-        this.structure = structure;
-    }
-
-    public Product(Long id, LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, String name, String description, List<ProductGroupCustomization> groupCustomizationFields, List<ProductPhoto> productPhotos, Structure structure) {
-        super(id, createdDate, createdBy, modifiedDate, modifiedBy);
-        this.name = name;
-        this.description = description;
-        this.groupCustomizationFields = groupCustomizationFields;
-        this.productPhotos = productPhotos;
-        this.structure = structure;
     }
 }

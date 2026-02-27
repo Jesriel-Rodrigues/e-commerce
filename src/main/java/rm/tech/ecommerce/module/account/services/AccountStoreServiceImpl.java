@@ -64,16 +64,16 @@ public class AccountStoreServiceImpl implements IAccountStoreService {
 
     private void addIdsAccountInStore(StoreAccount store, Account account){
 
-        if (account.getStore() != null) {
-            store.setId(account.getStore().getId());
-
-            if (account.getStore().getStoreAddress() != null) {
-                store.getStoreAddress().setId(account.getStore().getStoreAddress().getId());
-            }
-
-            if (account.getStore().getStoreCustomize() != null) {
-                store.getStoreCustomize().setId(account.getStore().getStoreCustomize().getId());
-            }
-        }
+//        if (account.getStore() != null) {
+//            store.setId(account.getStore().getId());
+//
+//            if (account.getStore().getStoreAddress() != null) {
+//                store.getStoreAddress().setId(account.getStore().getStoreAddress().getId());
+//            }
+//
+//            if (account.getStore().getStoreCustomize() != null) {
+//                store.getStoreCustomize().setId(account.getStore().getStoreCustomize().getId());
+//            }
+//        }
     }
 }
