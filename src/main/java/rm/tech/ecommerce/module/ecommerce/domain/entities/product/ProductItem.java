@@ -25,6 +25,7 @@ public class ProductItem extends AuditCommom {
     @Column(name = "count_stock")
     private boolean countStock;
     private Double quantity;
+    @Enumerated(EnumType.STRING)
     private ProductItemSize size;
     private String color;
 }

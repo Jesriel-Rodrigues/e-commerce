@@ -24,7 +24,7 @@ public class Product extends AuditCommom {
     @OneToMany(mappedBy="product", fetch=FetchType.LAZY)
     private List<ProductSku> productSkus;
 
-    @OneToMany(mappedBy="product", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ProductPhoto> productPhotos;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

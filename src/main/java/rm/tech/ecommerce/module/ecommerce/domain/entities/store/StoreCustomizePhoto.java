@@ -44,7 +44,7 @@ public class StoreCustomizePhoto {
 	private TypePhoto typePhoto;
 	
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "account_id", referencedColumnName = "id")
+	@JoinColumn(name = "store_id", referencedColumnName = "id")
 	@JsonIgnoreProperties("photos")
-	private StoreAccount store;
+	private Store store;
 }

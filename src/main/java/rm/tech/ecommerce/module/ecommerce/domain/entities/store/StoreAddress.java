@@ -28,5 +28,5 @@ public class StoreAddress extends Address {
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "storeAddress")
-	private StoreAccount store;
+	private Store store;
 }

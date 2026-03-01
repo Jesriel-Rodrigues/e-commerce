@@ -29,7 +29,4 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
-
-    @OneToMany(mappedBy = "orderItem", fetch = FetchType.LAZY)
-    private List<OrderItemAddon> orderItemAddons;
 }

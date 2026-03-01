@@ -19,9 +19,10 @@ public class OrderItemAddon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_item_id", referencedColumnName = "id")
-    private OrderItem orderItem;
+    @Column(length = 2000)
+    private String value;
+
+    private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "addon_id", referencedColumnName = "id")
@@ -39,8 +40,7 @@ public class OrderItemAddon {
     @JoinColumn(name = "selected_product_service_id", referencedColumnName = "id")
     private ProductService selectedProductService;
 
-    @Column(length = 2000)
-    private String value;
-
-    private BigDecimal price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 }

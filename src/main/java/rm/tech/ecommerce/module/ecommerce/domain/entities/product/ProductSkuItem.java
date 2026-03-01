@@ -11,15 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductSkuItem {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_sku_id", referencedColumnName = "id")
     private ProductSku productSku;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_item_id", referencedColumnName = "id")
     private ProductItem productItem;
 
     private Double quantity;
-
-
 }

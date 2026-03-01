@@ -6,6 +6,7 @@ import rm.tech.ecommerce.module.ecommerce.domain.entities.store.StoreAccount;
 import rm.tech.ecommerce.module.ecommerce.domain.enums.OrderStatus;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,4 +26,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private StoreAccount account;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<OrderItemAddon> orderItemAddons;
 }
