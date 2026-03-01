@@ -30,5 +30,5 @@ public class ProductSku {
             joinColumns = @JoinColumn(name = "product_sku_id"),
             inverseJoinColumns = @JoinColumn(name = "product_item_id")
     )
-    private List<ProductSkuItem> skuitems;
+    private List<ProductSkuItem> skuItems;
 }

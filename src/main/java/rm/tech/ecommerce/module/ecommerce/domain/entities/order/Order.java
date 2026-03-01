@@ -1,11 +1,11 @@
 package rm.tech.ecommerce.module.ecommerce.domain.entities.order;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.StoreAccount;
+import rm.tech.ecommerce.module.ecommerce.domain.enums.OrderStatus;
+
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -16,7 +16,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    // private List<OrderProducts> orderProducts;
+    @Column(name = "price_total")
+    private BigDecimal priceTotal;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private StoreAccount account;
 }

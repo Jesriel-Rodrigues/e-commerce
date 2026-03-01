@@ -10,7 +10,7 @@ spring:
     username: postgres
 # Senha de conexão banco de dados
     password: '123456'
-    # password: '@nestec123@'
+    # password: '123456'
 # Nome do driver
     driver-class-name: org.postgresql.Driver
   security:
