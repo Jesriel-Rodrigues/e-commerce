@@ -23,17 +23,28 @@ public class ProductServiceCatalogServiceImpl implements IProductServiceCatalogS
 
     @Override
     public ProductServiceCatalogResponse create(ProductServiceCatalogRequest request) {
-        ProductService entity = mapper.toEntity(request);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        ProductService entity = prepareForCreate(request);
+        return mapper.toResponse(save(entity));
     }
 
     @Override
     public ProductServiceCatalogResponse update(Long id, ProductServiceCatalogRequest request) {
+        ProductService entity = prepareForUpdate(id, request);
+        return mapper.toResponse(save(entity));
+    }
+
+    public ProductService prepareForCreate(ProductServiceCatalogRequest request) {
+        return mapper.toEntity(request);
+    }
+
+    public ProductService prepareForUpdate(Long id, ProductServiceCatalogRequest request) {
         ProductService entity = findEntityByIdOrThrow(id);
         mapper.updateEntity(entity, request);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        return entity;
+    }
+
+    public ProductService save(ProductService entity) {
+        return repository.save(entity);
     }
 
     @Override

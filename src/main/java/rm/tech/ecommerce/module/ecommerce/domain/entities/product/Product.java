@@ -27,8 +27,9 @@ public class Product extends AuditCommom {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ProductPhoto> productPhotos;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<ProductAddonConfig> productAddonConfigs;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_addon_config_id", referencedColumnName = "id")
+    private ProductAddonConfig productAddonConfig;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", referencedColumnName = "id")

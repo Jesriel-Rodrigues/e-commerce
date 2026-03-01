@@ -37,25 +37,42 @@ public class ProductAddonConfigServiceImpl implements IProductAddonConfigService
     @Override
     @Transactional
     public ProductAddonConfigResponse create(ProductAddonConfigRequest request) {
-        var product = productService.findEntityByIdOrThrow(request.getProductId());
-        ProductAddonConfig config = mapper.toEntity(request, product);
-        config = addonConfigRepository.save(config);
-        saveOptionsConfigs(config, request.getAddonOptionsConfigs());
-        config = addonConfigRepository.findById(config.getId()).orElse(config);
-        return mapper.toResponse(config);
+        ProductAddonConfig entity = prepareForCreate(request);
+        ProductAddonConfig saved = save(entity);
+        saveOptionsConfigs(saved, request.getAddonOptionsConfigs());
+        return mapper.toResponse(addonConfigRepository.findById(saved.getId()).orElse(saved));
     }
 
     @Override
     @Transactional
     public ProductAddonConfigResponse update(Long id, ProductAddonConfigRequest request) {
+        ProductAddonConfig entity = prepareForUpdate(id, request);
+        ProductAddonConfig saved = save(entity);
+        deleteOptionsConfigs(saved.getId());
+        saveOptionsConfigs(saved, request.getAddonOptionsConfigs());
+        return mapper.toResponse(addonConfigRepository.findById(saved.getId()).orElse(saved));
+    }
+
+    public ProductAddonConfig prepareForCreate(ProductAddonConfigRequest request) {
+        var product = productService.findEntityByIdOrThrow(request.getProductId());
+        return mapper.toEntity(request, product);
+    }
+
+    public ProductAddonConfig prepareForUpdate(Long id, ProductAddonConfigRequest request) {
         ProductAddonConfig config = findEntityByIdOrThrow(id);
         var product = request.getProductId() != null
                 ? productService.findEntityByIdOrThrow(request.getProductId())
                 : config.getProduct();
         mapper.updateEntity(config, request, product);
-        config = addonConfigRepository.save(config);
+        return config;
+    }
 
-        List<Long> optionIds = addonOptionsConfigRepository.findByProductAddonConfigId(config.getId()).stream()
+    public ProductAddonConfig save(ProductAddonConfig config) {
+        return addonConfigRepository.save(config);
+    }
+
+    private void deleteOptionsConfigs(Long configId) {
+        List<Long> optionIds = addonOptionsConfigRepository.findByProductAddonConfigId(configId).stream()
                 .map(ProductAddonOptionsConfig::getId)
                 .collect(Collectors.toList());
         if (!optionIds.isEmpty()) {
@@ -63,9 +80,6 @@ public class ProductAddonConfigServiceImpl implements IProductAddonConfigService
             configServiceRepository.findByProductAddonOptionsConfigIdIn(optionIds).forEach(configServiceRepository::delete);
             addonOptionsConfigRepository.findAllById(optionIds).forEach(addonOptionsConfigRepository::delete);
         }
-        saveOptionsConfigs(config, request.getAddonOptionsConfigs());
-        config = addonConfigRepository.findById(config.getId()).orElse(config);
-        return mapper.toResponse(config);
     }
 
     private void saveOptionsConfigs(ProductAddonConfig config, List<ProductAddonOptionsConfigRequest> optionsRequests) {
@@ -111,14 +125,7 @@ public class ProductAddonConfigServiceImpl implements IProductAddonConfigService
     @Transactional
     public void deleteById(Long id) {
         findEntityByIdOrThrow(id);
-        List<Long> optionIds = addonOptionsConfigRepository.findByProductAddonConfigId(id).stream()
-                .map(ProductAddonOptionsConfig::getId)
-                .collect(Collectors.toList());
-        if (!optionIds.isEmpty()) {
-            configItemRepository.findByProductAddonOptionsConfigIdIn(optionIds).forEach(configItemRepository::delete);
-            configServiceRepository.findByProductAddonOptionsConfigIdIn(optionIds).forEach(configServiceRepository::delete);
-            addonOptionsConfigRepository.findAllById(optionIds).forEach(addonOptionsConfigRepository::delete);
-        }
+        deleteOptionsConfigs(id);
         addonConfigRepository.deleteById(id);
     }
 

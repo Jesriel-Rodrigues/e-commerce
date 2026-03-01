@@ -34,29 +34,38 @@ public class OrderItemAddonServiceImpl implements IOrderItemAddonService {
 
     @Override
     public OrderItemAddonResponse create(OrderItemAddonRequest request) {
+        OrderItemAddon entity = prepareForCreate(request);
+        return mapper.toResponse(save(entity));
+    }
+
+    @Override
+    public OrderItemAddonResponse update(Long id, OrderItemAddonRequest request) {
+        OrderItemAddon entity = prepareForUpdate(id, request);
+        return mapper.toResponse(save(entity));
+    }
+
+    public OrderItemAddon prepareForCreate(OrderItemAddonRequest request) {
         Order order = request.getOrderId() != null ? orderService.findEntityByIdOrThrow(request.getOrderId()) : null;
         ProductAddonOptionsConfig addon = request.getAddonId() != null ? productAddonOptionsConfigService.findEntityByIdOrThrow(request.getAddonId()) : null;
         OrderItemAddon parent = request.getParentOrderItemAddonId() != null ? findEntityByIdOrThrow(request.getParentOrderItemAddonId()) : null;
         ProductItem selectedItem = request.getSelectedProductItemId() != null ? productItemService.findEntityByIdOrThrow(request.getSelectedProductItemId()) : null;
         ProductService selectedService = request.getSelectedProductServiceId() != null ? productServiceCatalogService.findEntityByIdOrThrow(request.getSelectedProductServiceId()) : null;
-
-        OrderItemAddon entity = mapper.toEntity(request, order, addon, parent, selectedItem, selectedService);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        return mapper.toEntity(request, order, addon, parent, selectedItem, selectedService);
     }
 
-    @Override
-    public OrderItemAddonResponse update(Long id, OrderItemAddonRequest request) {
+    public OrderItemAddon prepareForUpdate(Long id, OrderItemAddonRequest request) {
         OrderItemAddon entity = findEntityByIdOrThrow(id);
         Order order = request.getOrderId() != null ? orderService.findEntityByIdOrThrow(request.getOrderId()) : entity.getOrder();
         ProductAddonOptionsConfig addon = request.getAddonId() != null ? productAddonOptionsConfigService.findEntityByIdOrThrow(request.getAddonId()) : entity.getAddon();
         OrderItemAddon parent = request.getParentOrderItemAddonId() != null ? findEntityByIdOrThrow(request.getParentOrderItemAddonId()) : entity.getParentOrderItemAddon();
         ProductItem selectedItem = request.getSelectedProductItemId() != null ? productItemService.findEntityByIdOrThrow(request.getSelectedProductItemId()) : entity.getSelectedProductItem();
         ProductService selectedService = request.getSelectedProductServiceId() != null ? productServiceCatalogService.findEntityByIdOrThrow(request.getSelectedProductServiceId()) : entity.getSelectedProductService();
-
         mapper.updateEntity(entity, request, order, addon, parent, selectedItem, selectedService);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        return entity;
+    }
+
+    public OrderItemAddon save(OrderItemAddon entity) {
+        return repository.save(entity);
     }
 
     @Override

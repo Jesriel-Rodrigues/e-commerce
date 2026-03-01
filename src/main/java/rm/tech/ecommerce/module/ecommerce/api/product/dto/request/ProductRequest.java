@@ -17,8 +17,7 @@ public class ProductRequest {
     private Long id;
     private String name;
     private String description;
-    private List<Long> customizations;
-    private Long structureId;
+    private Long productAddonConfigId;
     private Long modelId;
     private Long storeId;
     private List<String> photos;

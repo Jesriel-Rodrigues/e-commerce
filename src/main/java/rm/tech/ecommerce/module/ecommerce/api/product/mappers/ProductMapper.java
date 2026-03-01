@@ -7,6 +7,7 @@ import rm.tech.ecommerce.module.ecommerce.api.product.dto.response.ProductRespon
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.Product;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.ProductPhoto;
 import rm.tech.ecommerce.module.ecommerce.domain.entities.product.ProductSku;
+import rm.tech.ecommerce.module.ecommerce.services.product.interfaces.IProductAddonConfigService;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,14 +20,15 @@ public class ProductMapper {
 
     private final ModelMapper modelMapper;
     private final ProductSkuMapper productSkuMapper;
+    private final IProductAddonConfigService productAddonConfigService;
 
     public Product toEntity(ProductRequest request) {
         Product product = new Product();
         product.setName(request.getName());
         product.setDescription(request.getDescription());
-        if (request.getPhotos() != null && !request.getPhotos().isEmpty()) {
+        if (request.getPhotos() != null && !request.getPhotos().isEmpty())
             product.setProductPhotos(buildProductPhotos(product, request.getPhotos()));
-        }
+        product.setProductAddonConfig(productAddonConfigService.findEntityByIdOrThrow(request.getProductAddonConfigId()));
         return product;
     }
 

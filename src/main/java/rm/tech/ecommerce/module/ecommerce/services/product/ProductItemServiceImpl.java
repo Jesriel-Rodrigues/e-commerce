@@ -28,22 +28,33 @@ public class ProductItemServiceImpl implements IProductItemService {
     @Override
     @Transactional
     public ProductItemResponse create(ProductItemRequest request) {
-        ProductItemType type = typeRepository.findById(request.getTypeId())
-                .orElseThrow(() -> new ResourceNotFoundException("Tipo de item não encontrado: " + request.getTypeId()));
-        ProductItem entity = mapper.toEntity(request, type);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        ProductItem entity = prepareForCreate(request);
+        return mapper.toResponse(save(entity));
     }
 
     @Override
     @Transactional
     public ProductItemResponse update(Long id, ProductItemRequest request) {
+        ProductItem entity = prepareForUpdate(id, request);
+        return mapper.toResponse(save(entity));
+    }
+
+    public ProductItem prepareForCreate(ProductItemRequest request) {
+        ProductItemType type = typeRepository.findById(request.getTypeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tipo de item não encontrado: " + request.getTypeId()));
+        return mapper.toEntity(request, type);
+    }
+
+    public ProductItem prepareForUpdate(Long id, ProductItemRequest request) {
         ProductItem entity = findEntityByIdOrThrow(id);
         ProductItemType type = typeRepository.findById(request.getTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Tipo de item não encontrado: " + request.getTypeId()));
         mapper.updateEntity(entity, request, type);
-        entity = repository.save(entity);
-        return mapper.toResponse(entity);
+        return entity;
+    }
+
+    public ProductItem save(ProductItem productItem) {
+        return repository.save(productItem);
     }
 
     @Override

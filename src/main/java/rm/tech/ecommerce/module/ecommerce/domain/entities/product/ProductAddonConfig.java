@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import rm.tech.ecommerce.module.commom.AuditCommom;
+import rm.tech.ecommerce.module.ecommerce.domain.entities.store.Store;
 import rm.tech.ecommerce.module.ecommerce.domain.enums.AddonConfigStatus;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public class ProductAddonConfig extends AuditCommom {
     @Enumerated(EnumType.STRING)
     private AddonConfigStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
-
     @OneToMany(mappedBy = "productAddonConfig", fetch = FetchType.LAZY)
     private List<ProductAddonOptionsConfig> addonOptionsConfigs;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
 }
